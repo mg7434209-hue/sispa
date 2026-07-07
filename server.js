@@ -31,26 +31,36 @@ const server = http.createServer((req, res) => {
   } catch (e) {
     res.writeHead(400); res.end('Bad Request'); return;
   }
-  if (urlPath === '/') urlPath = '/index.html';
-  if (!path.extname(urlPath)) urlPath += '.html';
-
-  const filePath = path.normalize(path.join(ROOT, urlPath));
-  if (!filePath.startsWith(ROOT)) {
-    res.writeHead(403); res.end('Forbidden'); return;
+  // aday dosyalar: dizin → index.html, uzantısız → .html veya dizin index'i
+  let candidates;
+  if (urlPath.endsWith('/')) {
+    candidates = [urlPath + 'index.html'];
+  } else if (!path.extname(urlPath)) {
+    candidates = [urlPath + '.html', urlPath + '/index.html'];
+  } else {
+    candidates = [urlPath];
   }
 
-  fs.readFile(filePath, (err, data) => {
-    if (err) {
+  const tryServe = (i) => {
+    if (i >= candidates.length) {
       res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
       res.end('<!doctype html><meta charset="utf-8"><title>404</title><p>Sayfa bulunamadı. <a href="/">Ana sayfa</a>');
       return;
     }
-    const ext = path.extname(filePath).toLowerCase();
-    const headers = { 'Content-Type': MIME[ext] || 'application/octet-stream' };
-    if (ext !== '.html') headers['Cache-Control'] = 'public, max-age=86400';
-    res.writeHead(200, headers);
-    res.end(data);
-  });
+    const filePath = path.normalize(path.join(ROOT, candidates[i]));
+    if (!filePath.startsWith(ROOT)) {
+      res.writeHead(403); res.end('Forbidden'); return;
+    }
+    fs.readFile(filePath, (err, data) => {
+      if (err) { tryServe(i + 1); return; }
+      const ext = path.extname(filePath).toLowerCase();
+      const headers = { 'Content-Type': MIME[ext] || 'application/octet-stream' };
+      if (ext !== '.html') headers['Cache-Control'] = 'public, max-age=86400';
+      res.writeHead(200, headers);
+      res.end(data);
+    });
+  };
+  tryServe(0);
 });
 
 server.listen(PORT, () => {

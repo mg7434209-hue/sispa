@@ -4,7 +4,8 @@
   "description": "SİSPA — Su Isıtma Sistemleri Pazarlama lansman sitesi (statik)",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "build": "node build.js",
+    "start": "node build.js && node server.js"
   },
   "engines": {
     "node": ">=18"
