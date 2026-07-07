@@ -35,10 +35,14 @@ Harici bağımlılık yoktur; `npm install` gerekmez.
 
 ## Kampanya (lansman)
 
-- 80L model: liste 22.000 ₺ → lansmana özel **17.000 ₺** (panel hariç), ilk **50 adet**.
-- Kampanya bittiğinde: `index.html` içindeki `#kampanya` bölümü, topbar metni,
-  modeller tablosundaki `tr.promo` satırı rozeti ve JSON-LD `Product.offers` fiyatı
-  güncellenmeli; ardından `node build.js`.
+- 80L model: liste 22.000 ₺ → lansmana özel **17.000 ₺** (panel hariç), 50 adetlik stok.
+- **Kalan stok ve bitiş tarihi TEK yerden yönetilir: `assets/js/config.js`**
+  (`remaining`, `total`, `end`). Satış oldukça `remaining` değerini azalt —
+  topbar, rozet, stok çubuğu ve geri sayım otomatik güncellenir; build gerekmez.
+- Süre dolunca geri sayım yerine "kampanya sona erdi" mesajı çıkar.
+- Kampanya tamamen kalkacaksa: `index.html` içindeki `#kampanya` bölümü, topbar
+  metni, modeller tablosundaki `tr.promo` satırı rozeti ve JSON-LD
+  `Product.offers` fiyatı güncellenmeli; ardından `node build.js`.
 
 ## İçerik kaynakları
 

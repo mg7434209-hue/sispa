@@ -194,6 +194,13 @@ tbody tr:last-child th,tbody tr:last-child td{border-bottom:0}
 .price-old s{font-size:1.35rem;font-weight:700;color:#9aa8b3;text-decoration-color:var(--bad);text-decoration-thickness:2.5px}
 .price-new strong{font-size:2.3rem;font-weight:800;color:var(--orange-dark);line-height:1.1}
 .save-badge{align-self:center;background:var(--orange);color:#fff;font-size:.82rem;font-weight:800;text-align:center;line-height:1.25;padding:.55rem .8rem;border-radius:12px;transform:rotate(-3deg);box-shadow:0 6px 16px rgba(238,122,31,.4)}
+.countdown{margin-bottom:1.1rem}
+.cd-label{display:block;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.45rem}
+.cd-boxes{display:flex;gap:.5rem}
+.cd-box{background:var(--navy);color:#fff;border-radius:10px;padding:.5rem .3rem .4rem;text-align:center;min-width:64px;flex:0 1 auto}
+.cd-box strong{display:block;font-size:1.45rem;font-weight:800;line-height:1.1;font-variant-numeric:tabular-nums}
+.cd-box span{display:block;font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#a8c4d8;margin-top:.15rem}
+.cd-ended{background:#FDECEA;color:var(--bad);font-size:.9rem;font-weight:700;padding:.6rem .9rem;border-radius:10px}
 .stock-meter{margin-bottom:1.1rem}
 .stock-meter-bar{height:9px;background:#e8eef3;border-radius:99px;overflow:hidden}
 .stock-meter-bar span{display:block;height:100%;background:linear-gradient(90deg,var(--orange),var(--bad));border-radius:99px}

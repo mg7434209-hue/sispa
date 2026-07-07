@@ -8,9 +8,9 @@
     /* ---- Topbar ---- */
     'topbar.badge': { en: 'LAUNCH OFFER', de: 'AKTION', ru: 'АКЦИЯ' },
     'topbar.text': {
-      en: 'Launch special: <strong>80L water heater — 17,000 TL instead of 22,000 TL</strong> — first 50 units only!',
-      de: 'Zur Eröffnung: <strong>80-L-Warmwasserbereiter für 17.000 TL statt 22.000 TL</strong> — nur die ersten 50 Stück!',
-      ru: 'К открытию: <strong>водонагреватель 80 л — 17 000 TL вместо 22 000 TL</strong> — только первые 50 шт.!'
+      en: 'Launch special: <strong>80L water heater — 17,000 TL instead of 22,000 TL</strong> — only <span data-stock-remaining>12</span> left!',
+      de: 'Zur Eröffnung: <strong>80-L-Warmwasserbereiter für 17.000 TL statt 22.000 TL</strong> — nur noch <span data-stock-remaining>12</span> Stück!',
+      ru: 'К открытию: <strong>водонагреватель 80 л — 17 000 TL вместо 22 000 TL</strong> — осталось <span data-stock-remaining>12</span> шт.!'
     },
     'topbar.link': { en: 'See the offer →', de: 'Zum Angebot →', ru: 'Смотреть →' },
 
@@ -111,7 +111,21 @@
       de: 'Wir feiern den Start von SİSPA: das beliebteste 80-Liter-Modell zum Aktionspreis — nur für die ersten 50 Stück.',
       ru: 'Мы празднуем открытие SİSPA: самая популярная модель на 80 литров по специальной цене — только первые 50 штук.'
     },
-    'camp.stock': { en: 'Limited stock: first 50 units', de: 'Begrenzter Vorrat: erste 50 Stück', ru: 'Лимит: первые 50 шт.' },
+    'camp.stock': {
+      en: 'Only <span data-stock-remaining>12</span> left!',
+      de: 'Nur noch <span data-stock-remaining>12</span> Stück!',
+      ru: 'Осталось <span data-stock-remaining>12</span> шт.!'
+    },
+    'camp.endsIn': { en: 'Offer ends in:', de: 'Aktion endet in:', ru: 'До конца акции:' },
+    'camp.d': { en: 'days', de: 'Tage', ru: 'дней' },
+    'camp.h': { en: 'hours', de: 'Std.', ru: 'часов' },
+    'camp.m': { en: 'minutes', de: 'Min.', ru: 'минут' },
+    'camp.s': { en: 'seconds', de: 'Sek.', ru: 'секунд' },
+    'camp.ended': {
+      en: 'The launch offer has ended — contact us for current pricing.',
+      de: 'Die Eröffnungsaktion ist beendet — kontaktieren Sie uns für aktuelle Preise.',
+      ru: 'Акция завершена — свяжитесь с нами, чтобы узнать актуальную цену.'
+    },
     'camp.name': { en: '80L Photovoltaic Water Heater', de: '80-L-Photovoltaik-Warmwasserbereiter', ru: 'Фотоэлектрический водонагреватель 80 л' },
     'camp.sub': {
       en: 'Enamel tank + magnesium anode · 600W DC input · grid backup · <strong>panel not included</strong>',
@@ -122,9 +136,9 @@
     'camp.newLabel': { en: 'Launch price', de: 'Aktionspreis', ru: 'Цена по акции' },
     'camp.save': { en: '5,000 TL<br>off', de: '5.000 TL<br>Rabatt', ru: 'Скидка<br>5 000 TL' },
     'camp.meter': {
-      en: '<strong>50 units</strong> of campaign stock — back to list price once sold out',
-      de: '<strong>50 Stück</strong> Aktionsware — danach gilt wieder der Listenpreis',
-      ru: '<strong>50 штук</strong> по акции — после распродажи вернётся цена по прайсу'
+      en: '<strong>Only <span data-stock-remaining>12</span> left</strong> of the <span data-stock-total>50</span>-unit campaign stock — back to list price once sold out',
+      de: 'Vom Aktionskontingent (<span data-stock-total>50</span> Stück) sind <strong>nur noch <span data-stock-remaining>12</span></strong> übrig — danach gilt wieder der Listenpreis',
+      ru: 'Из <span data-stock-total>50</span> акционных штук <strong>осталось <span data-stock-remaining>12</span></strong> — после распродажи вернётся цена по прайсу'
     },
     'camp.t1': {
       en: 'Ideal for 2-3 person households (compact 430 × 893 mm tank)',
