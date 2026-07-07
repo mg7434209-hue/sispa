@@ -1,6 +1,7 @@
-/* SİSPA build — kök TR index.html'den /en /de /ru sayfalarını üretir.
+/* SİSPA build — kök TR sayfalarından /en /de /ru sürümlerini üretir.
    Gövde metinleri istemcide assets/js/i18n.js ile çevrilir; burada yalnızca
-   lang/title/description/canonical/og ve yol düzeltmeleri statik gömülür. */
+   lang/title/description/canonical/og, dil değiştirici ve yollar statik gömülür.
+   Ayrıca sitemap.xml üretir. Yeni sayfa eklenince PAGES ve META'ya satır ekle. */
 'use strict';
 
 const fs = require('fs');
@@ -9,72 +10,163 @@ const path = require('path');
 const ROOT = __dirname;
 const SITE = 'https://sispa.com.tr';
 const LANGS = ['en', 'de', 'ru'];
+const PAGES = ['index.html', 'avantajlar.html', 'kampanya.html', 'modeller.html',
+  'hesaplayici.html', 'oteller.html', 'iletisim.html'];
+
+const LOCALES = { en: 'en_US', de: 'de_DE', ru: 'ru_RU' };
 
 const META = {
   en: {
-    locale: 'en_US',
-    title: 'SİSPA — Photovoltaic Water Heating Systems | Antalya / Manavgat',
-    desc: 'SİSPA — new-generation photovoltaic (PV) water heaters: hot water at mains pressure, a cable to the roof instead of pipes. Launch special: 80L for 17,000 TL.',
-    ogTitle: 'SİSPA — New-Generation Photovoltaic Water Heating',
-    ogDesc: 'Electricity from the sun, hot water from the tap. Launch special: 80L water heater for 17,000 TL instead of 22,000 TL — first 50 units.'
+    'index.html': {
+      title: 'SİSPA — Photovoltaic Water Heating Systems | Antalya / Manavgat',
+      desc: 'SİSPA — new-generation photovoltaic (PV) water heaters: hot water at mains pressure, a cable to the roof instead of pipes. Launch special: 80L for 17,000 TL.'
+    },
+    'avantajlar.html': {
+      title: 'Benefits & Comparison — SİSPA Photovoltaic Water Heating',
+      desc: '8 big advantages of photovoltaic water heaters and a side-by-side comparison with classic vacuum-tube solar systems.'
+    },
+    'kampanya.html': {
+      title: 'Launch Offer: 80L for 17,000 TL — SİSPA',
+      desc: 'Grand-opening special: 80L PV water heater for 17,000 TL instead of 22,000 TL (panel not included). Limited stock, countdown running.'
+    },
+    'modeller.html': {
+      title: 'Models & Technical Specs — SİSPA',
+      desc: 'PV water heater models from 60L to 200L: DC panel power, tank dimensions, grid backup and recommended use.'
+    },
+    'hesaplayici.html': {
+      title: 'Hot Water & Pool Heating Calculator — SİSPA',
+      desc: 'Estimate daily hot water demand for hotels and homes, and the PV panel power needed to heat your pool.'
+    },
+    'oteller.html': {
+      title: 'Hotels & Large Facilities — SİSPA',
+      desc: 'Scalable photovoltaic hot water for hotels, aparthotels, dormitories and sports facilities. Backed by GESPA Enerji.'
+    },
+    'iletisim.html': {
+      title: 'Contact — SİSPA | Manavgat / Antalya',
+      desc: 'SİSPA contact: +90 543 743 42 09 · gesmarketim@gmail.com · Manavgat/Antalya. Free on-site survey.'
+    }
   },
   de: {
-    locale: 'de_DE',
-    title: 'SİSPA — Photovoltaik-Warmwassersysteme | Antalya / Manavgat',
-    desc: 'SİSPA — Photovoltaik-Warmwasserbereiter der neuen Generation: Warmwasser mit Leitungsdruck, ein Kabel statt Rohre aufs Dach. Zur Eröffnung: 80 L für 17.000 TL.',
-    ogTitle: 'SİSPA — Photovoltaik-Warmwasser der neuen Generation',
-    ogDesc: 'Strom von der Sonne, warmes Wasser aus dem Hahn. Eröffnungsangebot: 80-L-Gerät für 17.000 TL statt 22.000 TL — nur die ersten 50 Stück.'
+    'index.html': {
+      title: 'SİSPA — Photovoltaik-Warmwassersysteme | Antalya / Manavgat',
+      desc: 'SİSPA — PV-Warmwasserbereiter der neuen Generation: Warmwasser mit Leitungsdruck, ein Kabel statt Rohre aufs Dach. Zur Eröffnung: 80 L für 17.000 TL.'
+    },
+    'avantajlar.html': {
+      title: 'Vorteile & Vergleich — SİSPA Photovoltaik-Warmwasser',
+      desc: '8 große Vorteile von PV-Warmwasserbereitern und der direkte Vergleich mit klassischen Vakuumröhren-Anlagen.'
+    },
+    'kampanya.html': {
+      title: 'Eröffnungsaktion: 80 L für 17.000 TL — SİSPA',
+      desc: 'Zur Eröffnung: 80-L-PV-Warmwasserbereiter für 17.000 TL statt 22.000 TL (ohne Modul). Begrenzter Vorrat, Countdown läuft.'
+    },
+    'modeller.html': {
+      title: 'Modelle & technische Daten — SİSPA',
+      desc: 'PV-Warmwasserbereiter von 60 L bis 200 L: DC-Modulleistung, Tankmaße, Netzunterstützung und Einsatzempfehlung.'
+    },
+    'hesaplayici.html': {
+      title: 'Warmwasser- & Pool-Heizungsrechner — SİSPA',
+      desc: 'Täglichen Warmwasserbedarf für Hotels und Wohnungen sowie die nötige PV-Leistung zur Poolheizung berechnen.'
+    },
+    'oteller.html': {
+      title: 'Hotels & große Objekte — SİSPA',
+      desc: 'Skalierbares PV-Warmwasser für Hotels, Apartments, Wohnheime und Sportstätten. Mit GESPA-Enerji-Garantie.'
+    },
+    'iletisim.html': {
+      title: 'Kontakt — SİSPA | Manavgat / Antalya',
+      desc: 'SİSPA Kontakt: +90 543 743 42 09 · gesmarketim@gmail.com · Manavgat/Antalya. Kostenlose Besichtigung.'
+    }
   },
   ru: {
-    locale: 'ru_RU',
-    title: 'SİSPA — фотоэлектрические системы нагрева воды | Анталья / Манавгат',
-    desc: 'SİSPA — водонагреватели нового поколения на фотоэлектрических панелях: горячая вода под давлением магистрали, на крышу идёт кабель, а не трубы. К открытию: 80 л за 17 000 TL.',
-    ogTitle: 'SİSPA — нагрев воды нового поколения',
-    ogDesc: 'Электричество от солнца, горячая вода из крана. Акция к открытию: водонагреватель 80 л за 17 000 TL вместо 22 000 TL — первые 50 шт.'
+    'index.html': {
+      title: 'SİSPA — фотоэлектрические системы нагрева воды | Анталья / Манавгат',
+      desc: 'SİSPA — водонагреватели нового поколения на PV-панелях: горячая вода под давлением магистрали, на крышу идёт кабель, а не трубы. К открытию: 80 л за 17 000 TL.'
+    },
+    'avantajlar.html': {
+      title: 'Преимущества и сравнение — SİSPA',
+      desc: '8 главных преимуществ PV-водонагревателей и сравнение с классическими вакуумно-трубчатыми системами.'
+    },
+    'kampanya.html': {
+      title: 'Акция открытия: 80 л за 17 000 TL — SİSPA',
+      desc: 'К открытию: PV-водонагреватель 80 л за 17 000 TL вместо 22 000 TL (без панели). Лимит по количеству, отсчёт запущен.'
+    },
+    'modeller.html': {
+      title: 'Модели и характеристики — SİSPA',
+      desc: 'Модели PV-водонагревателей от 60 до 200 л: мощность панели (DC), размеры бака, поддержка от сети.'
+    },
+    'hesaplayici.html': {
+      title: 'Калькулятор горячей воды и подогрева бассейна — SİSPA',
+      desc: 'Рассчитайте суточную потребность в горячей воде для отеля или дома и мощность панелей для подогрева бассейна.'
+    },
+    'oteller.html': {
+      title: 'Отели и крупные объекты — SİSPA',
+      desc: 'Масштабируемая PV-система горячей воды для отелей, апартаментов, общежитий и спортобъектов. Под защитой GESPA Enerji.'
+    },
+    'iletisim.html': {
+      title: 'Контакты — SİSPA | Манавгат / Анталья',
+      desc: 'SİSPA: +90 543 743 42 09 · gesmarketim@gmail.com · Манавгат/Анталья. Бесплатный выезд на объект.'
+    }
   }
 };
 
-function langSwitch(active, prefix) {
-  // prefix: '' kökte, '../' dil klasöründe
+function langSwitch(active, prefix, page) {
+  // prefix: '' kökte, '../' dil klasöründe · page: 'index.html' → dizin URL'si
+  const target = (pre) => page === 'index.html' ? (pre || './') : pre + page;
   const items = [
-    { code: 'tr', label: 'TR', href: prefix || './' },
-    { code: 'en', label: 'EN', href: prefix + 'en/' },
-    { code: 'de', label: 'DE', href: prefix + 'de/' },
-    { code: 'ru', label: 'RU', href: prefix + 'ru/' }
+    { code: 'tr', label: 'TR', href: target(prefix) },
+    { code: 'en', label: 'EN', href: prefix + 'en/' + (page === 'index.html' ? '' : page) },
+    { code: 'de', label: 'DE', href: prefix + 'de/' + (page === 'index.html' ? '' : page) },
+    { code: 'ru', label: 'RU', href: prefix + 'ru/' + (page === 'index.html' ? '' : page) }
   ];
   return '<nav class="lang-switch" aria-label="Dil / Language">\n        ' +
     items.map(i => `<a href="${i.href}"${i.code === active ? ' class="on"' : ''}>${i.label}</a>`).join('') +
     '\n      </nav>';
 }
 
-const src = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+for (const page of PAGES) {
+  const src = fs.readFileSync(path.join(ROOT, page), 'utf8');
 
-for (const lang of LANGS) {
-  const m = META[lang];
-  let out = src;
+  for (const lang of LANGS) {
+    const m = META[lang][page];
+    let out = src;
 
-  out = out.replace('<html lang="tr">', `<html lang="${lang}">`);
-  out = out.replace(/<title>[^<]*<\/title>/, `<title>${m.title}</title>`);
-  out = out.replace(/(<meta name="description" content=")[^"]*(">)/, `$1${m.desc}$2`);
-  out = out.replace(/(<link rel="canonical" href=")[^"]*(">)/, `$1${SITE}/${lang}/$2`);
-  out = out.replace(/(<meta property="og:title" content=")[^"]*(">)/, `$1${m.ogTitle}$2`);
-  out = out.replace(/(<meta property="og:description" content=")[^"]*(">)/, `$1${m.ogDesc}$2`);
-  out = out.replace(/(<meta property="og:locale" content=")[^"]*(">)/, `$1${m.locale}$2`);
+    out = out.replace('<html lang="tr">', `<html lang="${lang}">`);
+    out = out.replace(/<title>[^<]*<\/title>/, `<title>${m.title}</title>`);
+    out = out.replace(/(<meta name="description" content=")[^"]*(">)/, `$1${m.desc}$2`);
+    const canonical = page === 'index.html' ? `${SITE}/${lang}/` : `${SITE}/${lang}/${page}`;
+    out = out.replace(/(<link rel="canonical" href=")[^"]*(">)/, `$1${canonical}$2`);
+    out = out.replace(/(<meta property="og:title" content=")[^"]*(">)/, `$1${m.title}$2`);
+    out = out.replace(/(<meta property="og:description" content=")[^"]*(">)/, `$1${m.desc}$2`);
+    out = out.replace(/(<meta property="og:locale" content=")[^"]*(">)/, `$1${LOCALES[lang]}$2`);
 
-  // göreli varlık yolları bir üst dizine
-  out = out.replace(/href="assets\//g, 'href="../assets/');
-  out = out.replace(/src="assets\//g, 'src="../assets/');
+    // göreli varlık yolları bir üst dizine
+    out = out.replace(/href="assets\//g, 'href="../assets/');
+    out = out.replace(/src="assets\//g, 'src="../assets/');
 
-  // dil değiştirici
-  out = out.replace(/<nav class="lang-switch"[\s\S]*?<\/nav>/, langSwitch(lang, '../'));
+    // dil değiştirici
+    out = out.replace(/<nav class="lang-switch"[\s\S]*?<\/nav>/, langSwitch(lang, '../', page));
 
-  const dir = path.join(ROOT, lang);
-  fs.mkdirSync(dir, { recursive: true });
-  fs.writeFileSync(path.join(dir, 'index.html'), out);
-  console.log(`build: ${lang}/index.html`);
+    const dir = path.join(ROOT, lang);
+    fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(path.join(dir, page), out);
+  }
+
+  // kökteki dil değiştiriciyi normalize et (TR aktif)
+  const rootOut = src.replace(/<nav class="lang-switch"[\s\S]*?<\/nav>/, langSwitch('tr', '', page));
+  if (rootOut !== src) fs.writeFileSync(path.join(ROOT, page), rootOut);
+  console.log(`build: ${page} → en/ de/ ru/`);
 }
 
-// kökteki dil değiştiriciyi de normalize et (TR aktif)
-const rootOut = src.replace(/<nav class="lang-switch"[\s\S]*?<\/nav>/, langSwitch('tr', ''));
-if (rootOut !== src) fs.writeFileSync(path.join(ROOT, 'index.html'), rootOut);
+// sitemap.xml
+const urls = [];
+for (const page of PAGES) {
+  for (const pre of ['', 'en/', 'de/', 'ru/']) {
+    urls.push(`${SITE}/${pre}${page === 'index.html' ? '' : page}`);
+  }
+}
+const sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n' +
+  '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+  urls.map(u => `  <url><loc>${u}</loc></url>`).join('\n') +
+  '\n</urlset>\n';
+fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), sitemap);
+console.log(`build: sitemap.xml (${urls.length} URL)`);
 console.log('build: tamamlandı');

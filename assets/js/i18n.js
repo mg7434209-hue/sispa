@@ -22,6 +22,17 @@
     'nav.models': { en: 'Models', de: 'Modelle', ru: 'Модели' },
     'nav.contact': { en: 'Contact', de: 'Kontakt', ru: 'Контакты' },
     'nav.cta': { en: 'Get a Quote', de: 'Angebot anfordern', ru: 'Получить расчёт' },
+    'nav.calc': { en: 'Calculator', de: 'Rechner', ru: 'Калькулятор' },
+    'nav.hotels': { en: 'Hotels & Facilities', de: 'Hotels & Objekte', ru: 'Отели и объекты' },
+
+    /* ---- Ana sayfa ---- */
+    'home.campCta': { en: 'View the Offer →', de: 'Zum Angebot →', ru: 'Смотреть акцию →' },
+    'home.advMore': {
+      en: 'See all benefits and the comparison →',
+      de: 'Alle Vorteile und den Vergleich ansehen →',
+      ru: 'Все преимущества и сравнение →'
+    },
+    'foot.visits': { en: 'visitors', de: 'Besucher', ru: 'посетителей' },
 
     /* ---- Hero ---- */
     'hero.badge': {
@@ -240,6 +251,55 @@
       ru: 'Звоните или пишите в WhatsApp о ценах и наличии — выезд и расчёт мощности <strong>бесплатны</strong>.'
     },
     'mod.cta': { en: 'Get Pricing', de: 'Preise anfragen', ru: 'Узнать цены' },
+    'mod.calcLink': { en: 'Calculate Your Needs', de: 'Bedarf berechnen', ru: 'Рассчитать потребность' },
+
+    /* ---- Hesaplayıcı ---- */
+    'calcp.kicker': { en: 'Tools', de: 'Werkzeuge', ru: 'Инструменты' },
+    'calcp.h2': {
+      en: 'Hot water &amp; pool calculator',
+      de: 'Warmwasser- &amp; Pool-Rechner',
+      ru: 'Калькулятор горячей воды и бассейна'
+    },
+    'calcp.p': {
+      en: 'Quick pre-sizing for hotels, homes and pools. Results are estimates; exact sizing is done during the free survey.',
+      de: 'Schnelle Vorauslegung für Hotels, Wohnungen und Pools. Ergebnisse sind Richtwerte; die genaue Auslegung erfolgt bei der kostenlosen Besichtigung.',
+      ru: 'Быстрый предварительный расчёт для отелей, домов и бассейнов. Результаты ориентировочны; точный расчёт — при бесплатном выезде.'
+    },
+    'hw.h3': { en: 'Daily Hot Water Demand', de: 'Täglicher Warmwasserbedarf', ru: 'Суточная потребность в горячей воде' },
+    'hw.sub': {
+      en: 'Demand estimate by number of users for hotels, aparthotels, homes and sports facilities.',
+      de: 'Bedarfsermittlung nach Personenzahl für Hotels, Apartments, Wohnungen und Sportstätten.',
+      ru: 'Расчёт по числу пользователей для отелей, апартаментов, домов и спортобъектов.'
+    },
+    'hw.people': { en: 'Daily number of users (people)', de: 'Nutzer pro Tag (Personen)', ru: 'Пользователей в день (чел.)' },
+    'hw.type': { en: 'Usage type', de: 'Nutzungsart', ru: 'Тип использования' },
+    'hw.tOtel': { en: 'Hotel / guesthouse', de: 'Hotel / Pension', ru: 'Отель / пансион' },
+    'hw.tKonut': { en: 'Home / apartment', de: 'Wohnung / Apartment', ru: 'Дом / квартира' },
+    'hw.tSpor': { en: 'Sports facility / showers', de: 'Sportstätte / Duschen', ru: 'Спортобъект / душевые' },
+    'hw.rLiters': { en: 'Daily hot water demand', de: 'Täglicher Warmwasserbedarf', ru: 'Суточная потребность' },
+    'hw.rEnergy': { en: 'Daily energy required', de: 'Täglicher Energiebedarf', ru: 'Требуемая энергия в сутки' },
+    'hw.rKwp': { en: 'Recommended panel power', de: 'Empfohlene Modulleistung', ru: 'Рекомендуемая мощность панелей' },
+    'hw.rPanels': { en: 'Number of panels', de: 'Anzahl Module', ru: 'Количество панелей' },
+    'hw.rStorage': { en: 'Recommended tank capacity', de: 'Empfohlenes Speichervolumen', ru: 'Рекомендуемый объём бака' },
+    'hw.rPer': { en: 'Per-person daily use', de: 'Verbrauch pro Person/Tag', ru: 'Расход на человека в сутки' },
+    'pl.h3': { en: 'Pool Heating', de: 'Poolheizung', ru: 'Подогрев бассейна' },
+    'pl.sub': {
+      en: 'Photovoltaic panel power needed to bring pool water to the target temperature.',
+      de: 'Benötigte PV-Modulleistung, um das Poolwasser auf Zieltemperatur zu bringen.',
+      ru: 'Мощность PV-панелей, чтобы нагреть воду бассейна до нужной температуры.'
+    },
+    'pl.tons': { en: 'Water volume (tonnes / m³)', de: 'Wassermenge (Tonnen / m³)', ru: 'Объём воды (тонн / м³)' },
+    'pl.start': { en: 'Starting temperature (°C)', de: 'Starttemperatur (°C)', ru: 'Начальная температура (°C)' },
+    'pl.target': { en: 'Target temperature (°C)', de: 'Zieltemperatur (°C)', ru: 'Целевая температура (°C)' },
+    'pl.days': { en: 'Heating time (days)', de: 'Aufheizdauer (Tage)', ru: 'Время нагрева (дней)' },
+    'pl.rEnergy': { en: 'Heat energy required (incl. losses)', de: 'Benötigte Wärmeenergie (inkl. Verluste)', ru: 'Требуемая энергия (с учётом потерь)' },
+    'pl.rKwp': { en: 'Recommended panel power', de: 'Empfohlene Modulleistung', ru: 'Рекомендуемая мощность панелей' },
+    'pl.rPanels': { en: 'Number of panels', de: 'Anzahl Module', ru: 'Количество панелей' },
+    'calc.note': {
+      en: 'Results are estimates; they vary with insulation, weather and usage habits. Exact sizing is done during the free survey.',
+      de: 'Die Ergebnisse sind Richtwerte; sie variieren je nach Dämmung, Wetter und Nutzungsverhalten. Die genaue Auslegung erfolgt bei der kostenlosen Besichtigung.',
+      ru: 'Результаты ориентировочны и зависят от изоляции, погоды и режима использования. Точный расчёт выполняется при бесплатном выезде.'
+    },
 
     /* ---- Oteller ---- */
     'hot.kicker': { en: 'Hotels & Large Facilities', de: 'Hotels & große Objekte', ru: 'Отели и крупные объекты' },
@@ -247,6 +307,11 @@
       en: 'A <em>cable</em>, not pipes, comes down from the roof',
       de: 'Vom Dach kommt ein <em>Kabel</em> — kein Rohr',
       ru: 'С крыши спускается <em>кабель</em>, а не трубы'
+    },
+    'hot.pShort': {
+      en: 'Scalable photovoltaic hot water for hotels, aparthotels, dormitories and sports facilities.',
+      de: 'Skalierbares PV-Warmwasser für Hotels, Apartments, Wohnheime und Sportstätten.',
+      ru: 'Масштабируемая PV-система горячей воды для отелей, апартаментов, общежитий и спортобъектов.'
     },
     'hot.p': {
       en: 'Tonnes of collector load, pump stations and insulated piping costs disappear. With central or per-floor installation options, it is a scalable hot-water solution for hotels, aparthotels, dormitories and sports facilities.',

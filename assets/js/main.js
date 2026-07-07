@@ -6,6 +6,104 @@
   var yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
+  /* Sayı biçimlendirme (sayfa diline göre) */
+  var LOCALE = { tr: 'tr-TR', en: 'en-US', de: 'de-DE', ru: 'ru-RU' }[
+    (document.documentElement.lang || 'tr').toLowerCase()
+  ] || 'tr-TR';
+  function fmt(n, digits) {
+    return n.toLocaleString(LOCALE, { maximumFractionDigits: digits == null ? 0 : digits });
+  }
+
+  /* Ziyaretçi sayacı — server.js /api/visits (statik aynada sessizce gizlenir) */
+  (function () {
+    var wrap = document.getElementById('visitsWrap');
+    var out = document.getElementById('visitCount');
+    if (!wrap || !out || !window.fetch) return;
+    var hit = '';
+    try {
+      if (!sessionStorage.getItem('sispaVisited')) {
+        hit = '?hit=1';
+        sessionStorage.setItem('sispaVisited', '1');
+      }
+    } catch (e) { /* gizli mod vb. */ }
+    fetch('/api/visits' + hit)
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) {
+        if (d && typeof d.count === 'number') {
+          out.textContent = fmt(d.count);
+          wrap.hidden = false;
+        }
+      })
+      .catch(function () { /* API yoksa gizli kalır */ });
+  })();
+
+  /* Hesaplayıcı (katsayılar: config.js → calc) */
+  (function () {
+    var C = window.SISPA_CONFIG && window.SISPA_CONFIG.calc;
+    if (!C) return;
+    var $ = function (id) { return document.getElementById(id); };
+
+    /* panel gücü rozetleri */
+    document.querySelectorAll('[data-panelw]').forEach(function (el) {
+      el.textContent = C.panelW;
+    });
+
+    /* 1) Günlük sıcak su ihtiyacı */
+    var hwPeople = $('hwPeople');
+    if (hwPeople) {
+      var hwType = $('hwType');
+      var hwRun = function () {
+        var people = Math.max(0, parseFloat(hwPeople.value) || 0);
+        var per = C.perPerson[hwType.value] || 0;
+        var liters = people * per;
+        var dT = C.storageTemp - C.coldWater;
+        var energy = liters * dT * C.specificHeat / 1000;           // kWh/gün
+        var kwp = energy / (C.sunHours * C.sysEff);                  // kWp
+        var panels = liters ? Math.ceil(kwp * 1000 / C.panelW) : 0;
+        $('hwPer').textContent = fmt(per);
+        $('hwLiters').textContent = fmt(liters);
+        $('hwEnergy').textContent = fmt(energy, 1);
+        $('hwKwp').textContent = fmt(kwp, 1);
+        $('hwPanels').textContent = fmt(panels);
+        $('hwStorage').textContent = fmt(Math.round(liters * C.storageFactor / 10) * 10);
+      };
+      hwPeople.value = C.defaults.people;
+      hwPeople.addEventListener('input', hwRun);
+      hwType.addEventListener('change', hwRun);
+      hwRun();
+    }
+
+    /* 2) Havuz ısıtma */
+    var plTons = $('plTons');
+    if (plTons) {
+      var plStart = $('plStart'), plTarget = $('plTarget'), plDays = $('plDays');
+      var plRun = function () {
+        var tons = Math.max(0, parseFloat(plTons.value) || 0);
+        var start = parseFloat(plStart.value);
+        var target = parseFloat(plTarget.value);
+        if (isNaN(start)) start = C.defaults.poolStart;
+        if (isNaN(target)) target = C.defaults.poolTarget;
+        var days = Math.max(1, parseFloat(plDays.value) || 1);
+        var dT = Math.max(0, target - start);
+        /* 1 ton su × 1°C = specificHeat kWh; kayıplar poolLoss ile */
+        var energy = tons * dT * C.specificHeat * C.poolLoss;        // kWh
+        var kwp = energy / (days * C.sunHours * C.sysEff);           // kWp
+        var panels = energy ? Math.ceil(kwp * 1000 / C.panelW) : 0;
+        $('plEnergy').textContent = fmt(energy, 1);
+        $('plKwp').textContent = fmt(kwp, 1);
+        $('plPanels').textContent = fmt(panels);
+      };
+      plTons.value = C.defaults.tons;
+      plStart.value = C.defaults.poolStart;
+      plTarget.value = C.defaults.poolTarget;
+      plDays.value = C.defaults.days;
+      [plTons, plStart, plTarget, plDays].forEach(function (el) {
+        el.addEventListener('input', plRun);
+      });
+      plRun();
+    }
+  })();
+
   /* Kampanya: stok + geri sayım (kaynak: assets/js/config.js) */
   var cfg = (window.SISPA_CONFIG && window.SISPA_CONFIG.campaign) || null;
   if (cfg) {

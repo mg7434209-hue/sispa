@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hot Water & Pool Heating Calculator — SİSPA</title>
+  <meta name="description" content="Estimate daily hot water demand for hotels and homes, and the PV panel power needed to heat your pool.">
+  <meta name="theme-color" content="#134B70">
+  <link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
+  <link rel="canonical" href="https://sispa.com.tr/en/hesaplayici.html">
+  <link rel="alternate" hreflang="tr" href="https://sispa.com.tr/hesaplayici.html">
+  <link rel="alternate" hreflang="en" href="https://sispa.com.tr/en/hesaplayici.html">
+  <link rel="alternate" hreflang="de" href="https://sispa.com.tr/de/hesaplayici.html">
+  <link rel="alternate" hreflang="ru" href="https://sispa.com.tr/ru/hesaplayici.html">
+  <link rel="alternate" hreflang="x-default" href="https://sispa.com.tr/hesaplayici.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Hot Water & Pool Heating Calculator — SİSPA">
+  <meta property="og:description" content="Estimate daily hot water demand for hotels and homes, and the PV panel power needed to heat your pool.">
+  <meta property="og:image" content="https://sispa.com.tr/assets/img/urun-panel-isitici.jpg">
+  <meta property="og:locale" content="en_US">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<!-- ÜST DUYURU ŞERİDİ -->
+<div class="topbar">
+  <div class="container topbar-in">
+    <span class="topbar-badge" data-i18n="topbar.badge">KAMPANYA</span>
+    <span class="topbar-text" data-i18n="topbar.text">Lansmana özel: <strong>80L su ısıtıcı 22.000 ₺ yerine 17.000 ₺</strong> — son <span data-stock-remaining>12</span> adet!</span>
+    <a class="topbar-link" href="kampanya.html" data-i18n="topbar.link">Fırsatı gör →</a>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="site-header" id="top">
+  <div class="container header-in">
+    <a class="brand" href="./" aria-label="SİSPA ana sayfa">
+      <img src="../assets/img/logo.svg" alt="SİSPA — Su Isıtma Sistemleri Pazarlama" width="220" height="67">
+    </a>
+    <nav class="nav" id="nav">
+      <a href="avantajlar.html" data-i18n="nav.adv">Avantajlar</a>
+      <a href="kampanya.html" class="nav-promo" data-i18n="nav.campaign">Kampanya</a>
+      <a href="modeller.html" data-i18n="nav.models">Modeller</a>
+      <a href="hesaplayici.html" class="active" data-i18n="nav.calc">Hesaplayıcı</a>
+      <a href="oteller.html" data-i18n="nav.hotels">Oteller &amp; Tesisler</a>
+      <a href="iletisim.html" data-i18n="nav.contact">İletişim</a>
+      <nav class="lang-switch" aria-label="Dil / Language">
+        <a href="../hesaplayici.html">TR</a><a href="../en/hesaplayici.html" class="on">EN</a><a href="../de/hesaplayici.html">DE</a><a href="../ru/hesaplayici.html">RU</a>
+      </nav>
+      <a class="btn btn-orange nav-cta" href="https://wa.me/905437434209?text=Merhaba%2C%20fotovoltaik%20su%20ısıtıcı%20için%20teklif%20almak%20istiyorum." target="_blank" rel="noopener" data-i18n="nav.cta">Teklif Al</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Menüyü aç/kapat" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- SAYFA BAŞLIĞI -->
+<section class="page-head">
+  <div class="container">
+    <span class="kicker kicker-light" data-i18n="calcp.kicker">Araçlar</span>
+    <h1 data-i18n="calcp.h2">Sıcak su &amp; havuz hesaplayıcı</h1>
+    <p data-i18n="calcp.p">Otel, konut ve havuz için hızlı ön boyutlandırma. Sonuçlar tahminidir; kesin boyutlandırma ücretsiz keşifte yapılır.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="calc-grid">
+
+      <!-- Günlük sıcak su ihtiyacı -->
+      <article class="calc-card reveal">
+        <h3>💧 <span data-i18n="hw.h3">Günlük Sıcak Su İhtiyacı</span></h3>
+        <p class="calc-sub" data-i18n="hw.sub">Otel, apart, konut ve spor tesisleri için kişi sayısına göre ihtiyaç hesabı.</p>
+        <div class="calc-fields">
+          <label class="field">
+            <span data-i18n="hw.people">Günlük kullanıcı sayısı (kişi)</span>
+            <input type="number" id="hwPeople" min="1" max="10000" step="1" value="50" inputmode="numeric">
+          </label>
+          <label class="field">
+            <span data-i18n="hw.type">Kullanım tipi</span>
+            <select id="hwType">
+              <option value="otel" data-i18n="hw.tOtel">Otel / pansiyon</option>
+              <option value="konut" data-i18n="hw.tKonut">Konut / apart</option>
+              <option value="spor" data-i18n="hw.tSpor">Spor tesisi / duş ağırlıklı</option>
+            </select>
+          </label>
+        </div>
+        <div class="calc-results">
+          <div class="calc-r"><span class="calc-r-val"><strong id="hwLiters">0</strong> L</span><span class="calc-r-label" data-i18n="hw.rLiters">Günlük sıcak su ihtiyacı</span></div>
+          <div class="calc-r"><span class="calc-r-val"><strong id="hwEnergy">0</strong> kWh</span><span class="calc-r-label" data-i18n="hw.rEnergy">Gerekli günlük enerji</span></div>
+          <div class="calc-r hi"><span class="calc-r-val"><strong id="hwKwp">0</strong> kWp</span><span class="calc-r-label" data-i18n="hw.rKwp">Önerilen panel gücü</span></div>
+          <div class="calc-r"><span class="calc-r-val"><strong id="hwPanels">0</strong> × <span data-panelw>585</span>W</span><span class="calc-r-label" data-i18n="hw.rPanels">Panel adedi</span></div>
+          <div class="calc-r"><span class="calc-r-val"><strong id="hwStorage">0</strong> L</span><span class="calc-r-label" data-i18n="hw.rStorage">Önerilen depo kapasitesi</span></div>
+          <div class="calc-r"><span class="calc-r-val"><strong id="hwPer">0</strong> L</span><span class="calc-r-label" data-i18n="hw.rPer">Kişi başı günlük tüketim</span></div>
+        </div>
+      </article>
+
+      <!-- Havuz ısıtma -->
+      <article class="calc-card reveal">
+        <h3>🏊 <span data-i18n="pl.h3">Havuz Isıtma</span></h3>
+        <p class="calc-sub" data-i18n="pl.sub">Havuz suyunu hedef sıcaklığa çıkarmak için gereken fotovoltaik panel gücü.</p>
+        <div class="calc-fields">
+          <label class="field">
+            <span data-i18n="pl.tons">Su miktarı (ton / m³)</span>
+            <input type="number" id="plTons" min="0.5" max="5000" step="0.5" value="1" inputmode="decimal">
+          </label>
+          <label class="field">
+            <span data-i18n="pl.days">Isıtma süresi (gün)</span>
+            <input type="number" id="plDays" min="1" max="30" step="1" value="1" inputmode="numeric">
+          </label>
+          <label class="field">
+            <span data-i18n="pl.start">Başlangıç sıcaklığı (°C)</span>
+            <input type="number" id="plStart" min="0" max="39" step="1" value="22" inputmode="numeric">
+          </label>
+          <label class="field">
+            <span data-i18n="pl.target">Hedef sıcaklık (°C)</span>
+            <input type="number" id="plTarget" min="20" max="60" step="1" value="40" inputmode="numeric">
+          </label>
+        </div>
+        <div class="calc-results">
+          <div class="calc-r"><span class="calc-r-val"><strong id="plEnergy">0</strong> kWh</span><span class="calc-r-label" data-i18n="pl.rEnergy">Gerekli ısı enerjisi (kayıplar dahil)</span></div>
+          <div class="calc-r hi"><span class="calc-r-val"><strong id="plKwp">0</strong> kWp</span><span class="calc-r-label" data-i18n="pl.rKwp">Önerilen panel gücü</span></div>
+          <div class="calc-r"><span class="calc-r-val"><strong id="plPanels">0</strong> × <span data-panelw>585</span>W</span><span class="calc-r-label" data-i18n="pl.rPanels">Panel adedi</span></div>
+        </div>
+      </article>
+    </div>
+
+    <p class="models-note reveal" data-i18n="calc.note">Sonuçlar tahminidir; yalıtım, hava koşulları ve kullanım alışkanlıklarına göre değişir. Kesin boyutlandırma ücretsiz keşifte yapılır.</p>
+    <div class="center reveal">
+      <a class="btn btn-orange btn-lg" href="https://wa.me/905437434209?text=Merhaba%2C%20hesaplayıcı%20sonucuma%20göre%20teklif%20almak%20istiyorum." target="_blank" rel="noopener" data-i18n="hero.cta1">Ücretsiz Keşif İste</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container footer-in">
+    <img src="../assets/img/logo.svg" alt="SİSPA" width="180" height="55" class="footer-logo">
+    <p data-i18n="foot.p">SİSPA — Su Isıtma Sistemleri Pazarlama · Bir <a href="https://gespaenerji.com" target="_blank" rel="noopener">GESPA Enerji</a> markasıdır.</p>
+    <p class="visits" id="visitsWrap" hidden>👥 <strong id="visitCount">0</strong> <span data-i18n="foot.visits">ziyaretçi</span></p>
+    <p class="fine" data-i18n="foot.fine">© <span id="year"></span> SİSPA. Tüm hakları saklıdır. Görsellerdeki ürünler temsilidir; teknik veriler üretici kataloğuna dayanır.</p>
+  </div>
+</footer>
+
+<!-- WhatsApp sabit buton -->
+<a class="wa-fab" href="https://wa.me/905437434209?text=Merhaba%2C%20SİSPA%20hakkında%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener" aria-label="WhatsApp ile yazın">
+  <svg viewBox="0 0 32 32" width="28" height="28" fill="currentColor" aria-hidden="true"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.1.6 4.2 1.6 6L4 29l8.2-1.5c1.2.6 2.5.9 3.8.9 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 22.4c-1.2 0-2.4-.3-3.5-.8l-.5-.3-4.9.9.9-4.7-.3-.5c-1-1.6-1.5-3.4-1.5-5 0-5.4 4.4-9.8 9.8-9.8s9.8 4.4 9.8 9.8-4.4 9.4-9.8 9.4zm5.4-7.1c-.3-.1-1.8-.9-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.7-1.7-1-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.1-.3-.2-.6-.3z"/></svg>
+</a>
+
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/i18n.js"></script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

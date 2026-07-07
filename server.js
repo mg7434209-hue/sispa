@@ -24,12 +24,39 @@ const MIME = {
   '.woff2': 'font/woff2'
 };
 
+/* --- Ziyaretçi sayacı (visits.json'da saklanır, git'e girmez) --- */
+const VISITS_FILE = path.join(ROOT, 'visits.json');
+let visits = 0;
+try {
+  visits = JSON.parse(fs.readFileSync(VISITS_FILE, 'utf8')).count || 0;
+} catch (e) { /* ilk çalıştırma */ }
+let saveQueued = false;
+function saveVisits() {
+  if (saveQueued) return;
+  saveQueued = true;
+  setTimeout(() => {
+    saveQueued = false;
+    fs.writeFile(VISITS_FILE, JSON.stringify({ count: visits }), () => {});
+  }, 500);
+}
+
 const server = http.createServer((req, res) => {
   let urlPath;
   try {
     urlPath = decodeURIComponent(req.url.split('?')[0]);
   } catch (e) {
     res.writeHead(400); res.end('Bad Request'); return;
+  }
+
+  // Ziyaretçi sayacı API'si: ?hit=1 ile artar, her durumda sayacı döner
+  if (urlPath === '/api/visits') {
+    if ((req.url.split('?')[1] || '').includes('hit=1')) {
+      visits += 1;
+      saveVisits();
+    }
+    res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' });
+    res.end(JSON.stringify({ count: visits }));
+    return;
   }
   // aday dosyalar: dizin → index.html, uzantısız → .html veya dizin index'i
   let candidates;

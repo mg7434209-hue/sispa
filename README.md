@@ -5,16 +5,26 @@ Saf HTML + CSS + Vanilla JS, tek sayfalık statik site. Çok dilli: TR (kaynak) 
 
 ## Yapı
 
+**Çok sayfalı site.** TR sayfaları kök dizinde KAYNAKTIR; `/en /de /ru` üretilir.
+
 ```
-index.html          TR ana sayfa — TEK KAYNAK (elle düzenlenen tek sayfa)
+index.html          Ana sayfa (hero, nasıl çalışır, kampanya teaser, avantaj özeti)
+avantajlar.html     8 avantaj + görsel bant + PV vs klasik karşılaştırma
+kampanya.html       Lansman kampanyası (fiyat, stok, geri sayım) + Product JSON-LD
+modeller.html       Model/teknik özellik tablosu
+hesaplayici.html    Sıcak su ihtiyacı (kişi sayısına göre) + havuz ısıtma hesaplayıcı
+oteller.html        Oteller & büyük tesisler + hakkında (GESPA)
+iletisim.html       İletişim kartları
 en/ de/ ru/         build.js ile üretilir (elle düzenlenmez, repoda tutulur)
-build.js            Dil sayfalarını üretir (lang/title/meta/canonical statik gömülür)
-assets/css/style.css
-assets/js/i18n.js   Çeviri sözlüğü (data-i18n anahtarları, EN/DE/RU) — gövde metinleri
-assets/js/main.js   Mobil menü, scroll reveal, sayaçlar
-assets/img/         Logo (SVG) + üretici kataloğundan optimize ürün görselleri
-server.js           Küçük Node statik sunucu (dizin index desteğiyle)
+build.js            Dil sayfalarını + sitemap.xml üretir (PAGES ve META tabloları)
+assets/js/config.js TEK DOĞRU KAYNAK: kampanya + hesaplayıcı katsayıları
+assets/js/i18n.js   Çeviri sözlüğü (data-i18n anahtarları, EN/DE/RU)
+assets/js/main.js   Menü, reveal, sayaçlar, geri sayım, hesaplayıcı, ziyaretçi rozeti
+server.js           Statik sunucu + /api/visits ziyaretçi sayacı ucu
 ```
+
+Yeni sayfa eklerken: TÜM sayfalardaki nav'a link ekle, `build.js` içindeki
+`PAGES` listesine ve `META` tablosuna (3 dil) satır ekle, `node build.js` çalıştır.
 
 ## Çalıştırma
 
@@ -43,6 +53,21 @@ Harici bağımlılık yoktur; `npm install` gerekmez.
 - Kampanya tamamen kalkacaksa: `index.html` içindeki `#kampanya` bölümü, topbar
   metni, modeller tablosundaki `tr.promo` satırı rozeti ve JSON-LD
   `Product.offers` fiyatı güncellenmeli; ardından `node build.js`.
+
+## Hesaplayıcı (hesaplayici.html)
+
+Katsayılar `assets/js/config.js` → `calc` içindedir; koda sayı GÖMME.
+
+- Sıcak su: `litre = kişi × perPerson[tip]` · `enerji = litre × (depoT − şebekeT) × 1,16/1000 kWh`
+  `panel kWp = enerji / (güneşSaati × verim)` · depo önerisi `litre × storageFactor`.
+- Havuz: `enerji = ton × ΔT × 1,16 × kayıpPayı kWh` · `kWp = enerji / (gün × güneşSaati × verim)`.
+
+## Ziyaretçi sayacı
+
+- `server.js` → `GET /api/visits` (`?hit=1` artırır); sayı `visits.json`'da tutulur
+  (`.gitignore`'da — Railway'de yeniden dağıtımda sıfırlanır).
+- İstemci oturum başına 1 kez artırır (sessionStorage); API yoksa (ör. GitHub
+  Pages aynası) rozet kendini gizler.
 
 ## İçerik kaynakları
 
