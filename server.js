@@ -82,7 +82,8 @@ const server = http.createServer((req, res) => {
       if (err) { tryServe(i + 1); return; }
       const ext = path.extname(filePath).toLowerCase();
       const headers = { 'Content-Type': MIME[ext] || 'application/octet-stream' };
-      if (ext !== '.html') headers['Cache-Control'] = 'public, max-age=86400';
+      // HTML her seferinde doğrulanır; CSS/JS ?v=hash ile sürümlendiği için uzun önbellek güvenli
+      headers['Cache-Control'] = ext === '.html' ? 'no-cache' : 'public, max-age=604800';
       res.writeHead(200, headers);
       res.end(data);
     });

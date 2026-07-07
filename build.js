@@ -6,6 +6,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 
 const ROOT = __dirname;
 const SITE = 'https://sispa.com.tr';
@@ -108,6 +109,20 @@ const META = {
   }
 };
 
+/* Varlık sürüm damgası: dosya içeriği değişince ?v=hash değişir,
+   tarayıcı önbelleği otomatik kırılır. */
+const ASSETS = ['assets/css/style.css', 'assets/js/config.js',
+  'assets/js/i18n.js', 'assets/js/main.js'];
+const ASSET_VER = {};
+for (const a of ASSETS) {
+  const buf = fs.readFileSync(path.join(ROOT, a));
+  ASSET_VER[a] = crypto.createHash('md5').update(buf).digest('hex').slice(0, 8);
+}
+function stampAssets(html) {
+  return html.replace(/(assets\/(?:css|js)\/[A-Za-z0-9._-]+)(\?v=[0-9a-f]+)?/g,
+    (m, p1) => ASSET_VER[p1] ? p1 + '?v=' + ASSET_VER[p1] : p1);
+}
+
 function langSwitch(active, prefix, page) {
   // prefix: '' kökte, '../' dil klasöründe · page: 'index.html' → dizin URL'si
   const target = (pre) => page === 'index.html' ? (pre || './') : pre + page;
@@ -145,13 +160,17 @@ for (const page of PAGES) {
     // dil değiştirici
     out = out.replace(/<nav class="lang-switch"[\s\S]*?<\/nav>/, langSwitch(lang, '../', page));
 
+    out = stampAssets(out);
+
     const dir = path.join(ROOT, lang);
     fs.mkdirSync(dir, { recursive: true });
     fs.writeFileSync(path.join(dir, page), out);
   }
 
-  // kökteki dil değiştiriciyi normalize et (TR aktif)
-  const rootOut = src.replace(/<nav class="lang-switch"[\s\S]*?<\/nav>/, langSwitch('tr', '', page));
+  // kökteki dil değiştiriciyi normalize et (TR aktif) + varlık sürümlerini damgala
+  const rootOut = stampAssets(
+    src.replace(/<nav class="lang-switch"[\s\S]*?<\/nav>/, langSwitch('tr', '', page))
+  );
   if (rootOut !== src) fs.writeFileSync(path.join(ROOT, page), rootOut);
   console.log(`build: ${page} → en/ de/ ru/`);
 }
