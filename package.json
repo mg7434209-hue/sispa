@@ -1,0 +1,14 @@
+{
+  "name": "sispa-site",
+  "version": "1.0.0",
+  "description": "SİSPA — Su Isıtma Sistemleri Pazarlama lansman sitesi (statik)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "UNLICENSED",
+  "private": true
+}
