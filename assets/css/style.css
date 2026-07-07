@@ -208,6 +208,15 @@ tbody tr:last-child th,tbody tr:last-child td{border-bottom:0}
 .calc-r.hi .calc-r-val strong{color:#FFB264}
 .calc-r.hi .calc-r-label{color:#a8c4d8}
 
+/* ---------- Uzman ekip figürleri ---------- */
+.team-figs{display:grid;gap:1.1rem}
+.team-fig{background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);margin:0}
+.team-fig img{width:100%;height:220px;object-fit:cover}
+.team-fig figcaption{padding:.7rem 1rem;font-size:.85rem;color:var(--muted)}
+
+/* ---------- Hesaplayıcı kart görseli ---------- */
+.calc-img{width:calc(100% + 3.2rem);margin:-1.8rem -1.6rem 1.2rem;height:170px;object-fit:cover;object-position:center 70%;border-radius:var(--radius) var(--radius) 0 0}
+
 /* ---------- Ziyaretçi sayacı ---------- */
 .visits{margin-top:.7rem;font-size:.85rem;color:#9fb6c6}
 .visits strong{color:#FFB264;font-variant-numeric:tabular-nums}

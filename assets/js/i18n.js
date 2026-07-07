@@ -169,6 +169,41 @@
       ru: 'Акция действует до исчерпания запаса; фотоэлектрическая панель в цену не входит. Цены включают НДС и могут меняться без уведомления.'
     },
 
+    /* ---- Uzman ekip ---- */
+    'team.kicker': { en: 'Expert Team', de: 'Fachteam', ru: 'Профессиональная команда' },
+    'team.h2': {
+      en: 'Proper installation, <em>expert team</em>',
+      de: 'Fachgerechte Montage, <em>erfahrenes Team</em>',
+      ru: 'Правильный монтаж, <em>опытная команда</em>'
+    },
+    'team.p': {
+      en: 'The secret to efficiency in photovoltaic water heating is proper installation. SİSPA teams handle the whole process from survey to commissioning, with installations that fit your roof and plumbing and fully comply with standards.',
+      de: 'Das Geheimnis effizienter PV-Warmwasserbereitung ist die fachgerechte Montage. Die SİSPA-Teams übernehmen den gesamten Prozess von der Besichtigung bis zur Inbetriebnahme — passend zu Dach und Installation, normgerecht ausgeführt.',
+      ru: 'Секрет эффективности PV-нагрева воды — правильный монтаж. Команды SİSPA берут на себя весь процесс от осмотра до пуска: установка с учётом вашей крыши и разводки, в полном соответствии со стандартами.'
+    },
+    'team.t1': { en: 'Trained, experienced installation crew', de: 'Geschultes, erfahrenes Montageteam', ru: 'Обученная и опытная монтажная бригада' },
+    'team.t2': {
+      en: 'Mounting system matched to the roof type, watertight penetrations',
+      de: 'Zum Dachtyp passende Unterkonstruktion, dichte Durchführungen',
+      ru: 'Крепёж под тип крыши, герметичные проходы'
+    },
+    'team.t3': { en: 'DC wiring and protection to standards', de: 'Normgerechte DC-Verkabelung und Schutz', ru: 'Кабели DC и защита по стандартам' },
+    'team.t4': {
+      en: 'Commissioning, user training and workmanship warranty',
+      de: 'Inbetriebnahme, Einweisung und Gewährleistung auf die Montage',
+      ru: 'Пуск, обучение и гарантия на монтажные работы'
+    },
+    'team.c1': {
+      en: 'Safe, standards-compliant panel installation on the roof',
+      de: 'Sichere, normgerechte Panelmontage auf dem Dach',
+      ru: 'Безопасный монтаж панелей на крыше по стандартам'
+    },
+    'team.c2': {
+      en: 'Delivered rooftop installations — clean workmanship, full yield',
+      de: 'Übergebene Dachanlagen — saubere Arbeit, voller Ertrag',
+      ru: 'Сданные кровельные системы — аккуратная работа, полная отдача'
+    },
+
     /* ---- Vitrin ---- */
     'show.c1': {
       en: '<strong>Blue-Gold enamel inner tank</strong><br>Corrosion- and scale-resistant, with a thick magnesium anode.',
