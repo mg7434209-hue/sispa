@@ -199,9 +199,9 @@
       ru: 'Безопасный монтаж панелей на крыше по стандартам'
     },
     'team.c2': {
-      en: 'Delivered rooftop installations — clean workmanship, full yield',
-      de: 'Übergebene Dachanlagen — saubere Arbeit, voller Ertrag',
-      ru: 'Сданные кровельные системы — аккуратная работа, полная отдача'
+      en: 'The SİSPA field team at your door — survey to installation, one hand',
+      de: 'Das SİSPA-Team vor Ihrer Tür — von der Besichtigung bis zur Montage aus einer Hand',
+      ru: 'Выездная команда SİSPA у вашего порога — от осмотра до монтажа из одних рук'
     },
 
     /* ---- Vitrin ---- */
